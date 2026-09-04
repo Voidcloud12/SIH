@@ -1,0 +1,26 @@
+# Overrides for main.py. Only include what you change.
+mavlink:
+  device: /dev/serial0
+  baud: 921600
+  proxy_out: udpout:192.168.1.255:14550   # your GCS laptop
+lidar:
+  model: X2L
+  port: /dev/ydlidar
+map:
+  size_m: 40.0
+  resolution: 0.10          # indoor: finer than you'd use outdoors
+  max_range: 8.0            # X2L. Drives the speed cap.
+  max_tilt_deg: 10.0
+flight:
+  takeoff_alt: 1.5          # indoor
+  cruise_speed: 0.8         # clamped at preflight if lidar can't support it
+  geofence_radius: 40.0
+  max_alt: 4.0
+vision:
+  enabled: true
+  send_hz: 12.0             # EKF3 wants >=10; lidar is 7, so we extrapolate
+slam:
+  icp_iters: 30             # 12 under-converges badly. Do not lower.
+  subsample: 1              # raise to 2 if CPU-bound: halves ICP cost
+telemetry:
+  bind: tcp://0.0.0.0:5556
