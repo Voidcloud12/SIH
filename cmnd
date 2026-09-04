@@ -1,0 +1,23 @@
+ls -la ~
+ls -la ~/drone 2>/dev/null || echo "no drone directory yet"
+
+
+  ls -la ~/drone
+python3 -c "import ast; ast.parse(open('/home/$USER/drone/main.py').read()); print('main.py intact')"
+
+
+  mavlink:
+  device: /dev/fc              # or /dev/ttyUSB0
+  proxy_out: udpout:192.168.1.42:14550    # YOUR laptop IP
+lidar:
+  port: /dev/ydlidar
+flight:
+  takeoff_alt: 1.5
+  geofence_radius: 20.0
+
+
+
+  cd ~/drone
+python3 main.py --no-lidar --no-vision --sitl     # does it even start?
+
+  ss -tlnp | grep 5556
